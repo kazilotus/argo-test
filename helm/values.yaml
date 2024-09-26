@@ -22,7 +22,7 @@ apps:
     env:
       PORT: 4201
       DEFAULT_IMAGE_URL: "https://www.pokemonmillennium.net/wp-content/uploads/2015/11/missingno.png"
-      BIRD_IMAGE_API_URL: "http://birdImage-service:4200" # Internal K8s service URL
+      BIRD_IMAGE_API_URL: "http://birdimage-service:4200" # Internal K8s service URL
       BIRD_API_BASE_URL: "https://freetestapi.com/api/v1/birds/"
   birdImage:
     image:
