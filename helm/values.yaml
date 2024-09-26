@@ -8,6 +8,10 @@ ingress-nginx:
 
 # Prometheus and Grafana configuration
 kube-prometheus-stack:
+  prometheusOperator:
+    # Install CRDs with the Prometheus stack
+    installCRDs: true
+
   grafana:
     enabled: true
     adminUser: admin
@@ -49,5 +53,3 @@ kube-prometheus-stack:
         nginx.ingress.kubernetes.io/rewrite-target: /
       paths:
         - /prometheus
-  prometheusOperator:
-    enabled: true
