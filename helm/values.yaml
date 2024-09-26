@@ -5,51 +5,38 @@ ingress-nginx:
       type: NodePort
       nodePorts:
         http: 30080
+        https: 30443
 
 # Prometheus and Grafana configuration
-kube-prometheus-stack:
-  prometheusOperator:
-    # Install CRDs with the Prometheus stack
-    installCRDs: true
-
-  grafana:
-    enabled: true
-    adminUser: admin
-    adminPassword: lifi
+prometheus:
+  server:
     ingress:
       enabled: true
       annotations:
         nginx.ingress.kubernetes.io/rewrite-target: /
       paths:
-        - path: /grafana
+        - path: /prometheus
           pathType: Prefix
-    dashboardProviders:
-      dashboardproviders.yaml:
-        apiVersion: 1
-        providers:
-          - name: 'default'
-            orgId: 1
-            folder: ''
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/default
-    dashboards:
-      default:
-        kubernetes-cluster:
-          gnetId: 6417
-          revision: 1
-          datasource: Prometheus
-
-  prometheus:
-    prometheusSpec:
-      serviceMonitorSelectorNilUsesHelmValues: false
-      serviceMonitorSelector: {}
-      podMonitorSelector: {}
+      ingressClassName: "nginx"
+  alertmanager:
     ingress:
-      enabled: true
-      annotations:
-        nginx.ingress.kubernetes.io/rewrite-target: /
-      paths:
-        - /prometheus
+      enabled: false
+
+grafana:
+  enabled: true
+  adminUser: admin
+  adminPassword: lifi
+  ingress:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+    paths:
+      - path: /grafana
+        pathType: Prefix
+    ingressClassName: "nginx"
+  dashboards:
+    default:
+      kubernetes-dashboard:
+        gnetId: 6417
+        revision: 1
+        datasource: Prometheus

@@ -6,6 +6,9 @@ dependencies:
   - name: ingress-nginx
     version: 4.11.2
     repository: "https://kubernetes.github.io/ingress-nginx"
-  - name: kube-prometheus-stack
-    version: 62.7.0
+  - name: prometheus
+    version: 25.27.0
     repository: "https://prometheus-community.github.io/helm-charts"
+  - name: grafana
+    version: 8.5.1
+    repository: "https://grafana.github.io/helm-charts"
