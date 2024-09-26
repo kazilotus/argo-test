@@ -1,6 +1,6 @@
 apiVersion: v2
-name: app
-description: A Helm chart for deploying app
+name: bird-app
+description: A Helm chart for deploying Bird apps
 version: 1.0.0
 dependencies:
   - name: ingress-nginx

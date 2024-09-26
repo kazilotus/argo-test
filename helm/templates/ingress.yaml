@@ -1,21 +1,24 @@
+{{- range $appName, $app := .Values.apps }}
+{{- if $app.ingress.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: echo-server-ingress
-  labels:
-    app: echo-server
+  name: {{ $appName }}-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-    kubernetes.io/ingress.class: nginx
 spec:
-  ingressClassName: nginx
+  ingressClassName: "nginx"
   rules:
-  - http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: echo-server-service
-            port:
-              number: 80
+    - host: {{ $app.ingress.host }}
+      http:
+        paths:
+          - path: {{ $app.ingress.path }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $appName }}-service
+                port:
+                  number: {{ $app.service.port }}
+---
+{{- end }}
+{{- end }}
