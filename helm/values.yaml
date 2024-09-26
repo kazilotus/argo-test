@@ -16,6 +16,8 @@ kube-prometheus-stack:
       enabled: true
       annotations:
         nginx.ingress.kubernetes.io/rewrite-target: /
+      hosts:
+        - monitoring.local  # Added host field
       paths:
         - path: /grafana
           pathType: Prefix
@@ -23,20 +25,21 @@ kube-prometheus-stack:
       dashboardproviders.yaml:
         apiVersion: 1
         providers:
-        - name: 'default'
-          orgId: 1
-          folder: ''
-          type: file
-          disableDeletion: false
-          editable: true
-          options:
-            path: /var/lib/grafana/dashboards/default
+          - name: 'default'
+            orgId: 1
+            folder: ''
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/default
     dashboards:
       default:
         kubernetes-cluster:
           gnetId: 6417
           revision: 1
           datasource: Prometheus
+
   prometheus:
     prometheusSpec:
       serviceMonitorSelectorNilUsesHelmValues: false
@@ -49,7 +52,5 @@ kube-prometheus-stack:
       paths:
         - path: /prometheus
           pathType: Prefix
-      hosts:
-        - "monitoring.local"
   prometheusOperator:
     enabled: true
