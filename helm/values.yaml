@@ -14,10 +14,17 @@ prometheus:
       enabled: true
       annotations:
         nginx.ingress.kubernetes.io/rewrite-target: /
-      paths:
-        - path: /prometheus
-          pathType: Prefix
       ingressClassName: "nginx"
+      rules:
+        - http:
+            paths:
+              - path: /prometheus
+                pathType: Prefix
+                backend:
+                  service:
+                    name: prometheus-server
+                    port:
+                      number: 80
   alertmanager:
     ingress:
       enabled: false
@@ -30,10 +37,17 @@ grafana:
     enabled: true
     annotations:
       nginx.ingress.kubernetes.io/rewrite-target: /
-    paths:
-      - path: /grafana
-        pathType: Prefix
     ingressClassName: "nginx"
+    rules:
+      - http:
+          paths:
+            - path: /grafana
+              pathType: Prefix
+              backend:
+                service:
+                  name: grafana
+                  port:
+                    number: 80
   dashboards:
     default:
       kubernetes-dashboard:
