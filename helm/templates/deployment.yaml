@@ -16,7 +16,7 @@ spec:
         app: {{ lower $appName }}
     spec:
       containers:
-        - name: {{ $lower appName }}-container
+        - name: {{ lower $appName }}-container
           image: {{ $app.image.repository }}:{{ $app.image.tag }}
           ports:
             - containerPort: {{ $app.service.port }}
