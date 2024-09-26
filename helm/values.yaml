@@ -16,8 +16,6 @@ kube-prometheus-stack:
       enabled: true
       annotations:
         nginx.ingress.kubernetes.io/rewrite-target: /
-      hosts:
-        - monitoring.local  # Added host field
       paths:
         - path: /grafana
           pathType: Prefix
@@ -40,17 +38,5 @@ kube-prometheus-stack:
           revision: 1
           datasource: Prometheus
 
-  prometheus:
-    prometheusSpec:
-      serviceMonitorSelectorNilUsesHelmValues: false
-      serviceMonitorSelector: {}
-      podMonitorSelector: {}
-    ingress:
-      enabled: true
-      annotations:
-        nginx.ingress.kubernetes.io/rewrite-target: /
-      paths:
-        - path: /prometheus
-          pathType: Prefix
   prometheusOperator:
     enabled: true
