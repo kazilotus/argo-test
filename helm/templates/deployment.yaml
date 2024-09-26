@@ -6,7 +6,6 @@ metadata:
   labels:
     app: {{ lower $appName }}
 spec:
-  serviceAccountName: {{ $app.serviceAccount }}
   replicas: {{ $app.replicas }}
   selector:
     matchLabels:
