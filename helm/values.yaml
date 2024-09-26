@@ -13,7 +13,7 @@ apps:
   bird:
     image:
       repository: "484907518629.dkr.ecr.us-east-1.amazonaws.com/staging-devops-bird-repo"
-      tag: "597de4f"
+      tag: "latest"
     serviceAccount: "ecr-access-sa"
     ingress:
       enabled: true
@@ -28,7 +28,7 @@ apps:
   birdImage:
     image:
       repository: "484907518629.dkr.ecr.us-east-1.amazonaws.com/staging-devops-birdimage-repo"
-      tag: "597de4f"
+      tag: "latest"
     serviceAccount: "ecr-access-sa"
     ingress:
       enabled: false
