@@ -16,7 +16,6 @@ apps:
       tag: "597de4f"
     ingress:
       enabled: true
-      host: "bird-apps.local"
       path: "/"
     service:
       port: 4201
