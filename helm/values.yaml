@@ -6,24 +6,6 @@ ingress-nginx:
       nodePorts:
         http: 30080
 
-# Cluster Autoscaler configuration
-cluster-autoscaler:
-  rbac:
-    create: true
-  cloudProvider: aws
-  extraArgs:
-    expander: random
-    scale-down-enabled: "true"
-    skip-nodes-with-local-storage: "false"
-    skip-nodes-with-system-pods: "false"
-  resources:
-    limits:
-      cpu: 100m
-      memory: 512Mi
-    requests:
-      cpu: 50m
-      memory: 256Mi
-
 # Prometheus and Grafana configuration
 kube-prometheus-stack:
   grafana:
