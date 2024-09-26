@@ -28,7 +28,7 @@ apps:
       DEFAULT_IMAGE_URL: "https://www.pokemonmillennium.net/wp-content/uploads/2015/11/missingno.png"
       BIRD_IMAGE_API_URL: "http://birdimage-service:4200" # Internal K8s service URL
       BIRD_API_BASE_URL: "https://freetestapi.com/api/v1/birds/"
-  birdImage:
+  birdimage:
     replicas: 2
     image:
       repository: "{{ .Values.global.account_id }}.dkr.ecr.{{ .Values.global.region }}.amazonaws.com/{{ .Values.global.env }}-{{ .Values.global.project }}-birdimage-repo"
