@@ -1,19 +1,22 @@
+# Comes from ArgoCD parameter
 global:
-  env: staging
-  project: devops
+  env: {{ .Values.env }}       
+  project: {{ .Values.project }}
+  region: {{ .Values.region }}
+  account_id: {{ .Values.account_id }}
 
 ingress-nginx:
   controller:
     service:
       type: NodePort
       nodePorts:
-        http: 30080
+        http: {{ .Values.node_port }}
 
 apps:
   bird:
-    replicas: 1
+    replicas: 2
     image:
-      repository: "484907518629.dkr.ecr.us-east-1.amazonaws.com/staging-devops-bird-repo"
+      repository: "{{ .Values.global.account_id }}.dkr.ecr.{{ .Values.global.region }}.amazonaws.com/{{ .Values.global.env }}-{{ .Values.global.project }}-bird-repo"
       tag: "latest"
     ingress:
       enabled: true
@@ -26,9 +29,9 @@ apps:
       BIRD_IMAGE_API_URL: "http://birdimage-service:4200" # Internal K8s service URL
       BIRD_API_BASE_URL: "https://freetestapi.com/api/v1/birds/"
   birdImage:
-    replicas: 1
+    replicas: 2
     image:
-      repository: "484907518629.dkr.ecr.us-east-1.amazonaws.com/staging-devops-birdimage-repo"
+      repository: "{{ .Values.global.account_id }}.dkr.ecr.{{ .Values.global.region }}.amazonaws.com/{{ .Values.global.env }}-{{ .Values.global.project }}-birdimage-repo"
       tag: "latest"
     ingress:
       enabled: false
