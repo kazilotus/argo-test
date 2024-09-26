@@ -7,7 +7,7 @@ metadata:
     app: {{ lower $appName }}
 spec:
   serviceAccountName: {{ $app.serviceAccount }}
-  replicas: 1
+  replicas: {{ $app.replicas }}
   selector:
     matchLabels:
       app: {{ lower $appName }}

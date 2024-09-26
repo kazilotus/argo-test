@@ -11,10 +11,11 @@ ingress-nginx:
 
 apps:
   bird:
+    serviceAccount: "ecr-access-sa"
+    replicas: 1
     image:
       repository: "484907518629.dkr.ecr.us-east-1.amazonaws.com/staging-devops-bird-repo"
       tag: "latest"
-    serviceAccount: "ecr-access-sa"
     ingress:
       enabled: true
       path: "/"
@@ -26,10 +27,11 @@ apps:
       BIRD_IMAGE_API_URL: "http://birdimage-service:4200" # Internal K8s service URL
       BIRD_API_BASE_URL: "https://freetestapi.com/api/v1/birds/"
   birdImage:
+    serviceAccount: "ecr-access-sa"
+    replicas: 1
     image:
       repository: "484907518629.dkr.ecr.us-east-1.amazonaws.com/staging-devops-birdimage-repo"
       tag: "latest"
-    serviceAccount: "ecr-access-sa"
     ingress:
       enabled: false
     service:
