@@ -1,3 +1,4 @@
+# Ingress Nginx configuration
 ingress-nginx:
   controller:
     service:
@@ -5,6 +6,7 @@ ingress-nginx:
       nodePorts:
         http: 30080
 
+# Cluster Autoscaler configuration
 cluster-autoscaler:
   rbac:
     create: true
@@ -21,3 +23,51 @@ cluster-autoscaler:
     requests:
       cpu: 50m
       memory: 256Mi
+
+# Prometheus and Grafana configuration
+kube-prometheus-stack:
+  grafana:
+    enabled: true
+    adminUser: admin
+    adminPassword: lifi
+    ingress:
+      enabled: true
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /
+      paths:
+        - path: /grafana
+          pathType: Prefix
+    dashboardProviders:
+      dashboardproviders.yaml:
+        apiVersion: 1
+        providers:
+        - name: 'default'
+          orgId: 1
+          folder: ''
+          type: file
+          disableDeletion: false
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/default
+    dashboards:
+      default:
+        kubernetes-cluster:
+          gnetId: 6417
+          revision: 1
+          datasource: Prometheus
+  prometheus:
+    prometheusSpec:
+      serviceMonitorSelectorNilUsesHelmValues: false
+      serviceMonitorSelector: {}
+      podMonitorSelector: {}
+    ingress:
+      enabled: true
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /
+      paths:
+        - path: /prometheus
+          pathType: Prefix
+      hosts:
+        - "monitoring.local"
+  prometheusOperator:
+    enabled: true
